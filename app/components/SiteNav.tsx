@@ -117,16 +117,18 @@ export function SiteNav() {
         </li>
       </ul>
 
-      <section className="content_big_navigation" id="bigNavigation">
+      <section className="content_big_navigation" id="bigNavigation" inert={!open}>
         <ul className="row content_links">
-          {links.map((link, position) => (
+          {links.map((link) => (
             <li key={link.label} className={`row item${link.active ? " active" : ""}`}>
               <Link href={link.href} className="link" onClick={close}>
-                <span className="index" aria-hidden="true">
-                  {String(position + 1).padStart(2, "0")}
-                </span>
                 <span className="mask">
-                  <span className="label">{link.label}</span>
+                  <span className="label">
+                    {link.label}
+                    <span className="label_fill" aria-hidden="true">
+                      {link.label}
+                    </span>
+                  </span>
                 </span>
               </Link>
             </li>
