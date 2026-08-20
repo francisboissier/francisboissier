@@ -33,7 +33,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
     <>
       <div className="page-intro flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 pt-[clamp(2.5rem,5vw,5rem)]">
         <h2>{project.title}</h2>
-        <TextLink href="/" label="Close" />
+        <TextLink href="/stills" label="Close" />
       </div>
 
       <div className="plates">

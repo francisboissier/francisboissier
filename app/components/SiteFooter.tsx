@@ -12,7 +12,7 @@ export function SiteFooter() {
           </li>
           <li>
             <TextLink
-              href="https://www.instagram.com/fo__wave/"
+              href="https://www.instagram.com/fboissier/"
               label="FO—Wave"
               external
             />
