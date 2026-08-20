@@ -385,7 +385,6 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  html[data-ready] .masthead,
   html[data-ready] .page-intro {
     animation: rise-in 500ms var(--ease-out) both;
   }
