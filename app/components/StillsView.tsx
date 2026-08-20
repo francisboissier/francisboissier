@@ -66,7 +66,7 @@ export function StillsView({ groups }: { groups: Group[] }) {
 
   return (
     <>
-      <div className="view-toggle page-intro pt-[clamp(2.5rem,5vw,5rem)]">
+      <div className="view-toggle page-intro">
         {views.map((option) => (
           <button
             key={option.id}

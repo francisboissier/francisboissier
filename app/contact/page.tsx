@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <div className="page-intro pt-[clamp(2.5rem,5vw,5rem)]">
+      <div className="page-intro">
         <h2>Contact</h2>
       </div>
 

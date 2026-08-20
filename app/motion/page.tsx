@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function MotionPage() {
   return (
     <>
-      <div className="page-intro pt-[clamp(2.5rem,5vw,5rem)]">
+      <div className="page-intro">
         <h2>Motion</h2>
       </div>
 

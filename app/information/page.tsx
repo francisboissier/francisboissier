@@ -24,7 +24,7 @@ const publications = [
 export default function InformationPage() {
   return (
     <>
-      <div className="page-intro pt-[clamp(2.5rem,5vw,5rem)]">
+      <div className="page-intro">
         <h2>Information</h2>
       </div>
 

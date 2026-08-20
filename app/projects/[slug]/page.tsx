@@ -28,12 +28,13 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
   if (!project) notFound();
 
   const { previous, next } = getNeighbours(slug);
+  const index = project.cover.kind === "video" ? "/motion" : "/stills";
 
   return (
     <>
-      <div className="page-intro flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 pt-[clamp(2.5rem,5vw,5rem)]">
+      <div className="page-intro flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
         <h2>{project.title}</h2>
-        <TextLink href="/stills" label="Close" />
+        <TextLink href={index} label="Close" />
       </div>
 
       <div className="plates">
