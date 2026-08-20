@@ -97,6 +97,70 @@
     margin-top: clamp(4rem, 9vw, 9rem);
   }
 
+  .view-toggle {
+    display: flex;
+    align-items: baseline;
+    column-gap: clamp(0.75rem, 1.6vw, 1.25rem);
+  }
+
+  .toggle-option {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .toggle-option[aria-pressed="true"] .roman {
+    visibility: hidden;
+  }
+
+  .toggle-option[aria-pressed="true"] .cursive {
+    visibility: visible;
+  }
+
+  .stills-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 0.55em;
+    margin: 0;
+    padding: 0;
+    margin-top: clamp(2.5rem, 5vw, 5rem);
+    list-style: none;
+  }
+
+  .groups {
+    display: flex;
+    flex-direction: column;
+    row-gap: clamp(3.5rem, 7vw, 7rem);
+    margin-top: clamp(2.5rem, 5vw, 5rem);
+  }
+
+  .group > .text-link {
+    display: inline-block;
+    padding-bottom: 0.85em;
+  }
+
+  .gallery.gallery-tight {
+    margin-top: 0;
+    row-gap: var(--column-gap);
+  }
+
+  .plates {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: var(--row-gap);
+    margin-top: clamp(2.5rem, 5vw, 5rem);
+  }
+
+  .plate {
+    width: min(100%, calc(88vh * var(--ratio)));
+    margin: 0;
+  }
+
   .gallery-row {
     display: flex;
     column-gap: var(--column-gap);
@@ -121,6 +185,17 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .film {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
   }
 
   .caption {
@@ -168,8 +243,41 @@
   }
 }
 
+@keyframes retract {
+  from {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  to {
+    clip-path: inset(0 0 100% 0);
+    opacity: 1;
+  }
+}
+
+@keyframes view-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  .masthead {
+  .view-enter > * {
+    animation: view-in 260ms var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 30ms);
+  }
+
+  .view-exit .gallery {
+    animation: retract 190ms var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 22ms);
+  }
+
+  .masthead,
+  .page-intro {
     animation: rise-in 500ms var(--ease-out) both;
   }
 
@@ -179,5 +287,19 @@
       animation-timeline: view();
       animation-range: entry 0% entry 45%;
     }
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }

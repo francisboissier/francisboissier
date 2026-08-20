@@ -42,3 +42,6 @@ next-env.d.ts
 
 # design reference (not distributed)
 reference/
+
+# source media kept locally (HEVC .mov exceeds Cloudflare Pages 25 MiB per-file limit)
+public/*.mov

@@ -26,7 +26,7 @@ function Media({ item, priority }: { item: GalleryItem; priority: boolean }) {
       height={item.height}
       alt=""
       priority={priority}
-      sizes="(max-width: 600px) 100vw, 33vw"
+      sizes="(max-width: 600px) 100vw, 45vw"
     />
   );
 }
@@ -34,26 +34,38 @@ function Media({ item, priority }: { item: GalleryItem; priority: boolean }) {
 export function GalleryRow({
   items,
   priority = false,
+  plain = false,
 }: {
   items: GalleryItem[];
   priority?: boolean;
+  plain?: boolean;
 }) {
   return (
     <div className="gallery-row reveal">
-      {items.map((item) => (
-        <article
-          key={item.src}
-          className="gallery-item"
-          style={{ "--ratio": item.ratio } as React.CSSProperties}
-        >
-          <Link href={`/projects/${item.slug}`}>
-            <span className="frame">
-              <Media item={item} priority={priority} />
-            </span>
-            <span className="caption">{item.title}</span>
-          </Link>
-        </article>
-      ))}
+      {items.map((item) => {
+        const frame = (
+          <span className="frame">
+            <Media item={item} priority={priority} />
+          </span>
+        );
+
+        return (
+          <article
+            key={item.src}
+            className="gallery-item"
+            style={{ "--ratio": item.ratio } as React.CSSProperties}
+          >
+            {plain ? (
+              frame
+            ) : (
+              <Link href={`/projects/${item.slug}`}>
+                {frame}
+                <span className="caption">{item.title}</span>
+              </Link>
+            )}
+          </article>
+        );
+      })}
     </div>
   );
 }
