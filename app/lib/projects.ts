@@ -373,6 +373,15 @@ export const galleryRows: GalleryItem[][] = [
       "ratio": 0.8002
     },
     {
+      "kind": "image",
+      "slug": "manner",
+      "title": "Manner",
+      "src": "/manner-mag/SnapInsta.to_563279148_18526398844051803_6728258116829190117_n.jpg",
+      "width": 1440,
+      "height": 1080,
+      "ratio": 1.3333
+    },
+    {
       "kind": "video",
       "slug": "replicaman",
       "title": "Replicaman",
@@ -381,27 +390,9 @@ export const galleryRows: GalleryItem[][] = [
       "height": 1080,
       "ratio": 1.3611,
       "poster": "/replicaman-poster.jpg"
-    },
-    {
-      "kind": "image",
-      "slug": "manner",
-      "title": "Manner",
-      "src": "/manner-mag/SnapInsta.to_563279148_18526398844051803_6728258116829190117_n.jpg",
-      "width": 1440,
-      "height": 1080,
-      "ratio": 1.3333
     }
   ],
   [
-    {
-      "kind": "image",
-      "slug": "practice",
-      "title": "Practice",
-      "src": "/practice-magazine/SnapInsta.to_728152464_18597368368051803_6941606075923491605_n.jpg",
-      "width": 3211,
-      "height": 4096,
-      "ratio": 0.7839
-    },
     {
       "kind": "image",
       "slug": "the-homme-plus",
@@ -410,6 +401,15 @@ export const galleryRows: GalleryItem[][] = [
       "width": 3140,
       "height": 4096,
       "ratio": 0.7666
+    },
+    {
+      "kind": "image",
+      "slug": "heroine",
+      "title": "Heroine",
+      "src": "/heroine-mag/SnapInsta.to_670652632_18574060702051803_8213018663567811149_n.jpg",
+      "width": 1440,
+      "height": 938,
+      "ratio": 1.5352
     },
     {
       "kind": "image",
@@ -422,23 +422,23 @@ export const galleryRows: GalleryItem[][] = [
     },
     {
       "kind": "image",
-      "slug": "heroine",
-      "title": "Heroine",
-      "src": "/heroine-mag/SnapInsta.to_670652632_18574060702051803_8213018663567811149_n.jpg",
-      "width": 1440,
-      "height": 938,
-      "ratio": 1.5352
+      "slug": "practice",
+      "title": "Practice",
+      "src": "/practice-magazine/SnapInsta.to_728152464_18597368368051803_6941606075923491605_n.jpg",
+      "width": 3211,
+      "height": 4096,
+      "ratio": 0.7839
     }
   ],
   [
     {
       "kind": "image",
-      "slug": "manner",
-      "title": "Manner",
-      "src": "/manner-mag/SnapInsta.to_563355375_18526398847051803_3270804040196190977_n.jpg",
-      "width": 1440,
-      "height": 1080,
-      "ratio": 1.3333
+      "slug": "the-homme-plus",
+      "title": "The Homme Plus",
+      "src": "/thehommeplusmag/SnapInsta.to_703762740_18582641020051803_1380896339128992959_n.jpg",
+      "width": 2073,
+      "height": 2701,
+      "ratio": 0.7675
     },
     {
       "kind": "image",
@@ -451,12 +451,12 @@ export const galleryRows: GalleryItem[][] = [
     },
     {
       "kind": "image",
-      "slug": "the-homme-plus",
-      "title": "The Homme Plus",
-      "src": "/thehommeplusmag/SnapInsta.to_703762740_18582641020051803_1380896339128992959_n.jpg",
-      "width": 2073,
-      "height": 2701,
-      "ratio": 0.7675
+      "slug": "manner",
+      "title": "Manner",
+      "src": "/manner-mag/SnapInsta.to_563355375_18526398847051803_3270804040196190977_n.jpg",
+      "width": 1440,
+      "height": 1080,
+      "ratio": 1.3333
     }
   ],
   [
@@ -464,19 +464,10 @@ export const galleryRows: GalleryItem[][] = [
       "kind": "image",
       "slug": "ed-sheeran",
       "title": "Ed Sheeran",
-      "src": "/thehommeplusmag/ed-sheeran/SnapInsta.to_586683623_18536630095051803_5021575998721420706_n.jpg",
-      "width": 977,
-      "height": 637,
-      "ratio": 1.5338
-    },
-    {
-      "kind": "image",
-      "slug": "heroine",
-      "title": "Heroine",
-      "src": "/heroine-mag/SnapInsta.to_671005990_18574060693051803_3006768832488274416_n.jpg",
-      "width": 1440,
-      "height": 941,
-      "ratio": 1.5303
+      "src": "/thehommeplusmag/ed-sheeran/SnapInsta.to_591029250_18537254023051803_3317672101623441931_n.jpg",
+      "width": 1333,
+      "height": 1778,
+      "ratio": 0.7497
     },
     {
       "kind": "image",
@@ -495,6 +486,15 @@ export const galleryRows: GalleryItem[][] = [
       "width": 3211,
       "height": 4096,
       "ratio": 0.7839
+    },
+    {
+      "kind": "image",
+      "slug": "heroine",
+      "title": "Heroine",
+      "src": "/heroine-mag/SnapInsta.to_671005990_18574060693051803_3006768832488274416_n.jpg",
+      "width": 1440,
+      "height": 941,
+      "ratio": 1.5303
     }
   ],
   [
@@ -509,32 +509,32 @@ export const galleryRows: GalleryItem[][] = [
     },
     {
       "kind": "image",
-      "slug": "ed-sheeran",
-      "title": "Ed Sheeran",
-      "src": "/thehommeplusmag/ed-sheeran/SnapInsta.to_586688707_18536630110051803_3442984520929843781_n.jpg",
-      "width": 757,
-      "height": 493,
-      "ratio": 1.5355
-    },
-    {
-      "kind": "image",
       "slug": "manner",
       "title": "Manner",
       "src": "/manner-mag/SnapInsta.to_563782644_18526398829051803_3033678615898165326_n.jpg",
       "width": 1440,
       "height": 1079,
       "ratio": 1.3346
+    },
+    {
+      "kind": "image",
+      "slug": "ed-sheeran",
+      "title": "Ed Sheeran",
+      "src": "/thehommeplusmag/ed-sheeran/SnapInsta.to_586688707_18536630110051803_3442984520929843781_n.jpg",
+      "width": 757,
+      "height": 493,
+      "ratio": 1.5355
     }
   ],
   [
     {
       "kind": "image",
-      "slug": "practice",
-      "title": "Practice",
-      "src": "/practice-magazine/SnapInsta.to_735205308_18597368563051803_1407355845734745586_n.jpg",
-      "width": 3211,
-      "height": 4096,
-      "ratio": 0.7839
+      "slug": "manner",
+      "title": "Manner",
+      "src": "/manner-mag/SnapInsta.to_564078429_18526398055051803_3424275402340929766_n.jpg",
+      "width": 1440,
+      "height": 1878,
+      "ratio": 0.7668
     },
     {
       "kind": "image",
@@ -547,12 +547,12 @@ export const galleryRows: GalleryItem[][] = [
     },
     {
       "kind": "image",
-      "slug": "manner",
-      "title": "Manner",
-      "src": "/manner-mag/SnapInsta.to_564078429_18526398055051803_3424275402340929766_n.jpg",
-      "width": 1440,
-      "height": 1878,
-      "ratio": 0.7668
+      "slug": "practice",
+      "title": "Practice",
+      "src": "/practice-magazine/SnapInsta.to_735205308_18597368563051803_1407355845734745586_n.jpg",
+      "width": 3211,
+      "height": 4096,
+      "ratio": 0.7839
     },
     {
       "kind": "image",
@@ -565,15 +565,6 @@ export const galleryRows: GalleryItem[][] = [
     }
   ],
   [
-    {
-      "kind": "image",
-      "slug": "ed-sheeran",
-      "title": "Ed Sheeran",
-      "src": "/thehommeplusmag/ed-sheeran/SnapInsta.to_589358343_18536630116051803_130891875757074093_n.jpg",
-      "width": 980,
-      "height": 641,
-      "ratio": 1.5289
-    },
     {
       "kind": "image",
       "slug": "manner",
@@ -591,18 +582,18 @@ export const galleryRows: GalleryItem[][] = [
       "width": 3211,
       "height": 4096,
       "ratio": 0.7839
-    }
-  ],
-  [
+    },
     {
       "kind": "image",
       "slug": "ed-sheeran",
       "title": "Ed Sheeran",
-      "src": "/thehommeplusmag/ed-sheeran/SnapInsta.to_591029250_18537254023051803_3317672101623441931_n.jpg",
-      "width": 1333,
-      "height": 1778,
-      "ratio": 0.7497
-    },
+      "src": "/thehommeplusmag/ed-sheeran/SnapInsta.to_589358343_18536630116051803_130891875757074093_n.jpg",
+      "width": 980,
+      "height": 641,
+      "ratio": 1.5289
+    }
+  ],
+  [
     {
       "kind": "image",
       "slug": "manner",
@@ -620,6 +611,15 @@ export const galleryRows: GalleryItem[][] = [
       "width": 3221,
       "height": 4096,
       "ratio": 0.7864
+    },
+    {
+      "kind": "image",
+      "slug": "ed-sheeran",
+      "title": "Ed Sheeran",
+      "src": "/thehommeplusmag/ed-sheeran/SnapInsta.to_586683623_18536630095051803_5021575998721420706_n.jpg",
+      "width": 977,
+      "height": 637,
+      "ratio": 1.5338
     }
   ]
 ];

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { TextLink } from "../components/TextLink";
 
 export const metadata: Metadata = {
-  title: "Information, Francis Boissier",
+  title: "Information & Contact, Francis Boissier",
 };
 
 const clients = [
@@ -25,7 +25,7 @@ export default function InformationPage() {
   return (
     <>
       <div className="page-intro">
-        <h2>Information</h2>
+        <h2>Information &amp; Contact</h2>
       </div>
 
       <div className="information stagger">
@@ -52,6 +52,46 @@ export default function InformationPage() {
           </div>
 
           <div className="meta">
+            <section>
+              <h3>Email</h3>
+              <ul>
+                <li>
+                  <TextLink
+                    href="mailto:hello@francisboissier.com"
+                    label="hello@francisboissier.com"
+                    external
+                  />
+                </li>
+              </ul>
+            </section>
+
+            <section>
+              <h3>Representation</h3>
+              <ul>
+                <li>Lorem Ipsum Agency, London</li>
+              </ul>
+            </section>
+
+            <section>
+              <h3>Studio</h3>
+              <ul>
+                <li>Lorem ipsum dolor 24, London</li>
+              </ul>
+            </section>
+
+            <section>
+              <h3>Instagram</h3>
+              <ul>
+                <li>
+                  <TextLink
+                    href="https://www.instagram.com/fboissier/"
+                    label="@fboissier"
+                    external
+                  />
+                </li>
+              </ul>
+            </section>
+
             <section>
               <h3>Clients</h3>
               <ul>

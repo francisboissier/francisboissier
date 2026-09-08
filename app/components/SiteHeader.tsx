@@ -4,8 +4,7 @@ import { TextLink } from "./TextLink";
 const nav = [
   { label: "Stills", href: "/stills" },
   { label: "Motion", href: "/motion" },
-  { label: "Information", href: "/information" },
-  { label: "Contact", href: "/contact" },
+  { label: "Information & Contact", href: "/information" },
 ];
 
 export function SiteHeader() {

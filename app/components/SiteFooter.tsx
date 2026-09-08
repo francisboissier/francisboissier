@@ -8,12 +8,12 @@ export function SiteFooter() {
       <nav>
         <ul className="flex flex-wrap gap-x-5 gap-y-1">
           <li>
-            <TextLink href="/contact" label="Contact" />
+            <TextLink href="/information" label="Information & Contact" />
           </li>
           <li>
             <TextLink
               href="https://www.instagram.com/fboissier/"
-              label="FO—Wave"
+              label="Instagram"
               external
             />
           </li>
