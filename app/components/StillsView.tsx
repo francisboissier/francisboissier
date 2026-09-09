@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { flushSync } from "react-dom";
-import type { GalleryItem } from "../lib/projects";
+import type { GalleryItem } from "../lib/content";
 import { GalleryRow } from "./GalleryRow";
 
 type Group = {

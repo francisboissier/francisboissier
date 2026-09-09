@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { GalleryItem } from "../lib/projects";
+import type { GalleryItem } from "../lib/content";
 
 export function Plate({
   item,

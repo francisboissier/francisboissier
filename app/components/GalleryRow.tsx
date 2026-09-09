@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { GalleryItem } from "../lib/projects";
+import type { GalleryItem } from "../lib/content";
 
 function Media({ item, priority }: { item: GalleryItem; priority: boolean }) {
   if (item.kind === "video") {

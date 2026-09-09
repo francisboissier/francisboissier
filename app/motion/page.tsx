@@ -1,12 +1,22 @@
 import type { Metadata } from "next";
 import { FilmTile } from "../components/FilmTile";
-import { filmRows } from "../lib/projects";
+import { getProjects } from "../lib/content";
 
 export const metadata: Metadata = {
   title: "Motion, Francis Boissier",
 };
 
-export default function MotionPage() {
+export default async function MotionPage() {
+  const films = (await getProjects())
+    .filter((project) => project.kind === "motion" && project.cover)
+    .map((project) => project.cover!);
+
+  const rows = films.reduce<(typeof films)[]>((acc, film, index) => {
+    if (index % 2 === 0) acc.push([film]);
+    else acc[acc.length - 1].push(film);
+    return acc;
+  }, []);
+
   return (
     <>
       <div className="page-intro">
@@ -14,10 +24,10 @@ export default function MotionPage() {
       </div>
 
       <div className="gallery">
-        {filmRows.map((row) => (
-          <div key={row[0].slug} className="gallery-row">
+        {rows.map((row) => (
+          <div key={row[0].src} className="gallery-row">
             {row.map((film) => (
-              <FilmTile key={film.slug} film={film} />
+              <FilmTile key={film.src} film={film} />
             ))}
           </div>
         ))}

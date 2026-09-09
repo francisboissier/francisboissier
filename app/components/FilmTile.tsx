@@ -1,9 +1,9 @@
 "use client";
 
 import { useRef } from "react";
-import type { Film } from "../lib/projects";
+import type { GalleryItem } from "../lib/content";
 
-export function FilmTile({ film }: { film: Film }) {
+export function FilmTile({ film }: { film: GalleryItem }) {
   const video = useRef<HTMLVideoElement>(null);
 
   const play = () => {

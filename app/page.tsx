@@ -1,10 +1,12 @@
 import { GalleryRow } from "./components/GalleryRow";
-import { galleryRows } from "./lib/projects";
+import { getHomeItems, packRows } from "./lib/content";
 
-export default function Home() {
+export default async function Home() {
+  const rows = packRows(await getHomeItems());
+
   return (
     <div className="gallery gallery-lead">
-      {galleryRows.map((items, position) => (
+      {rows.map((items, position) => (
         <GalleryRow
           key={items[0].src}
           items={items}

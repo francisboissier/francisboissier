@@ -1,27 +1,32 @@
 import type { Metadata } from "next";
+import { PortableText } from "@portabletext/react";
 import { TextLink } from "../components/TextLink";
+import { getInformation } from "../lib/content";
+import type { PortableTextBlock } from "@portabletext/types";
 
 export const metadata: Metadata = {
   title: "Information & Contact, Francis Boissier",
 };
 
-const clients = [
-  "Lorem Ipsum",
-  "Dolor Sit",
-  "Consectetur",
-  "Adipiscing",
-  "Tempor Labore",
-  "Magna Aliqua",
-];
+function MetaSection({
+  heading,
+  children,
+}: {
+  heading: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section>
+      <h3>{heading}</h3>
+      <ul>{children}</ul>
+    </section>
+  );
+}
 
-const publications = [
-  "Lorem Quarterly, 2026",
-  "Ipsum Review, 2025",
-  "Dolor Journal, 2025",
-  "Consectetur Annual, 2024",
-];
+export default async function InformationPage() {
+  const info = await getInformation();
+  const wave = info?.wave;
 
-export default function InformationPage() {
   return (
     <>
       <div className="page-intro">
@@ -31,113 +36,84 @@ export default function InformationPage() {
       <div className="information stagger">
         <div className="info" style={{ "--i": 0 } as React.CSSProperties}>
           <div className="prose">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-              cupidatat non proident, sunt in culpa qui officia deserunt mollit
-              anim id est laborum.
-            </p>
-            <p>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-              quae ab illo inventore veritatis et quasi architecto beatae vitae
-              dicta sunt explicabo.
-            </p>
+            {info?.intro ? (
+              <PortableText value={info.intro as PortableTextBlock[]} />
+            ) : null}
           </div>
 
           <div className="meta">
-            <section>
-              <h3>Email</h3>
-              <ul>
+            {info?.email && (
+              <MetaSection heading="Email">
+                <li>
+                  <TextLink href={`mailto:${info.email}`} label={info.email} external />
+                </li>
+              </MetaSection>
+            )}
+
+            {info?.representation && (
+              <MetaSection heading="Representation">
+                <li>{info.representation}</li>
+              </MetaSection>
+            )}
+
+            {info?.studio && (
+              <MetaSection heading="Studio">
+                <li>{info.studio}</li>
+              </MetaSection>
+            )}
+
+            {info?.instagram && (
+              <MetaSection heading="Instagram">
                 <li>
                   <TextLink
-                    href="mailto:hello@francisboissier.com"
-                    label="hello@francisboissier.com"
+                    href={info.instagram}
+                    label={`@${info.instagram.replace(/\/$/, "").split("/").pop()}`}
                     external
                   />
                 </li>
-              </ul>
-            </section>
+              </MetaSection>
+            )}
 
-            <section>
-              <h3>Representation</h3>
-              <ul>
-                <li>Lorem Ipsum Agency, London</li>
-              </ul>
-            </section>
-
-            <section>
-              <h3>Studio</h3>
-              <ul>
-                <li>Lorem ipsum dolor 24, London</li>
-              </ul>
-            </section>
-
-            <section>
-              <h3>Instagram</h3>
-              <ul>
-                <li>
-                  <TextLink
-                    href="https://www.instagram.com/fboissier/"
-                    label="@fboissier"
-                    external
-                  />
-                </li>
-              </ul>
-            </section>
-
-            <section>
-              <h3>Clients</h3>
-              <ul>
-                {clients.map((client) => (
+            {info?.clients?.length ? (
+              <MetaSection heading="Clients">
+                {info.clients.map((client) => (
                   <li key={client}>{client}</li>
                 ))}
-              </ul>
-            </section>
+              </MetaSection>
+            ) : null}
 
-            <section>
-              <h3>Publications</h3>
-              <ul>
-                {publications.map((publication) => (
+            {info?.publications?.length ? (
+              <MetaSection heading="Publications">
+                {info.publications.map((publication) => (
                   <li key={publication}>{publication}</li>
                 ))}
-              </ul>
-            </section>
+              </MetaSection>
+            ) : null}
           </div>
         </div>
 
-        <section
-          className="info-section"
-          style={{ "--i": 1 } as React.CSSProperties}
-        >
-          <h3>FO&mdash;Wave</h3>
+        {wave?.heading && (
+          <section
+            className="info-section"
+            style={{ "--i": 1 } as React.CSSProperties}
+          >
+            <h3>{wave.heading}</h3>
 
-          <div className="prose">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
-              ipsum suspendisse ultrices gravida, risus commodo viverra maecenas
-              accumsan lacus vel facilisis.
-            </p>
-            <p>
-              Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
-              aut fugit, sed quia consequuntur magni dolores eos qui ratione
-              voluptatem sequi nesciunt.
-            </p>
-          </div>
+            {wave.body ? (
+              <div className="prose">
+                <PortableText value={wave.body as PortableTextBlock[]} />
+              </div>
+            ) : null}
 
-          <TextLink
-            href="https://www.instagram.com/fo__wave/"
-            label="@fo__wave"
-            external
-          />
-        </section>
+            {wave.linkUrl && (
+              <TextLink
+                href={wave.linkUrl}
+                label={wave.linkLabel ?? wave.linkUrl}
+                external
+              />
+            )}
+          </section>
+        )}
       </div>
     </>
   );
