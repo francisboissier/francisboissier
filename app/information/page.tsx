@@ -90,30 +90,27 @@ export default async function InformationPage() {
               </MetaSection>
             ) : null}
           </div>
+
+          {wave?.heading && (
+            <section className="info-section">
+              <h3>{wave.heading}</h3>
+
+              {wave.body ? (
+                <div className="prose">
+                  <PortableText value={wave.body as PortableTextBlock[]} />
+                </div>
+              ) : null}
+
+              {wave.linkUrl && (
+                <TextLink
+                  href={wave.linkUrl}
+                  label={wave.linkLabel ?? wave.linkUrl}
+                  external
+                />
+              )}
+            </section>
+          )}
         </div>
-
-        {wave?.heading && (
-          <section
-            className="info-section"
-            style={{ "--i": 1 } as React.CSSProperties}
-          >
-            <h3>{wave.heading}</h3>
-
-            {wave.body ? (
-              <div className="prose">
-                <PortableText value={wave.body as PortableTextBlock[]} />
-              </div>
-            ) : null}
-
-            {wave.linkUrl && (
-              <TextLink
-                href={wave.linkUrl}
-                label={wave.linkLabel ?? wave.linkUrl}
-                external
-              />
-            )}
-          </section>
-        )}
       </div>
     </>
   );

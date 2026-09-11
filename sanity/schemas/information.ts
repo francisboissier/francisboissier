@@ -28,7 +28,6 @@ export const information = defineType({
       description: "Drag to reorder.",
       type: "array",
       of: [defineArrayMember({ type: "string" })],
-      options: { layout: "tags" },
     }),
     defineField({
       name: "publications",
