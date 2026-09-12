@@ -10,6 +10,7 @@ export type GalleryItem = {
   src: string;
   poster?: string;
   tile?: string;
+  sources?: { av1: string; h264: string };
   width: number;
   height: number;
   ratio: number;
@@ -65,23 +66,32 @@ function posterUrl(url: string) {
   return `${url}?w=1200&q=78&auto=format&fit=max`;
 }
 
-function readTiles(): Set<string> {
+function readIndex(path: string): Set<string> {
   try {
     return new Set(
-      JSON.parse(
-        readFileSync(join(process.cwd(), "public/tiles/index.json"), "utf8"),
-      ) as string[],
+      JSON.parse(readFileSync(join(process.cwd(), path), "utf8")) as string[],
     );
   } catch {
     return new Set();
   }
 }
 
-const tiles = readTiles();
+const tiles = readIndex("public/tiles/index.json");
+const webFilms = readIndex("public/films/index.json");
+
+function assetId(video: string) {
+  return video.split("/").pop()?.replace(/\.[^.]+$/, "") ?? "";
+}
 
 function tileUrl(video: string) {
-  const id = video.split("/").pop()?.replace(/\.[^.]+$/, "") ?? "";
+  const id = assetId(video);
   return tiles.has(id) ? `/tiles/${id}.mp4` : undefined;
+}
+
+function filmSources(video: string) {
+  const id = assetId(video);
+  if (!webFilms.has(id)) return undefined;
+  return { av1: `/films/${id}.av1.mp4`, h264: `/films/${id}.h264.mp4` };
 }
 
 function toItem(
@@ -99,6 +109,7 @@ function toItem(
     src: video ?? raw.url,
     poster: video ? posterUrl(raw.url) : undefined,
     tile: video ? tileUrl(video) : undefined,
+    sources: video ? filmSources(video) : undefined,
     width: raw.width,
     height: raw.height,
     ratio: Number((raw.width / raw.height).toFixed(4)),
