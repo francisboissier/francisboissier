@@ -32,7 +32,7 @@ function Media({
       src={item.src}
       width={item.width}
       height={item.height}
-      alt=""
+      alt={item.title}
       priority={priority}
       sizes={sizes}
     />

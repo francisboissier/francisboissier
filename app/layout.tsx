@@ -1,12 +1,54 @@
 import type { Metadata, Viewport } from "next";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
+import { getSettings } from "./lib/content";
+import { siteDescription, siteName, siteUrl } from "./lib/site";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Francis Boissier Photography",
-  description: "Francis Boissier is a photographer based in London.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  const name = settings?.name ?? siteName;
+  const description = settings?.description ?? siteDescription;
+
+  return {
+    metadataBase: new URL(siteUrl),
+    title: {
+      default: `${name}, Photographer and Director`,
+      template: `%s, ${name}`,
+    },
+    description,
+    alternates: { canonical: "/" },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    },
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/favicon.svg", type: "image/svg+xml" },
+        { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      ],
+      apple: "/apple-touch-icon.png",
+    },
+    manifest: "/manifest.webmanifest",
+    openGraph: {
+      type: "website",
+      locale: "en_GB",
+      siteName: name,
+      url: siteUrl,
+      title: `${name}, Photographer and Director`,
+      description,
+      images: [{ url: "/og.png", width: 1200, height: 630, alt: name }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${name}, Photographer and Director`,
+      description,
+      images: ["/og.png"],
+    },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#ffffff",

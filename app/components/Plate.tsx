@@ -31,7 +31,7 @@ export function Plate({
             src={item.src}
             width={item.width}
             height={item.height}
-            alt=""
+            alt={item.title}
             priority={priority}
             sizes="(max-width: 600px) 100vw, 90vw"
           />

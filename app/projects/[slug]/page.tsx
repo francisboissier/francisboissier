@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Plate } from "../../components/Plate";
 import { TextLink } from "../../components/TextLink";
 import { getProject, getProjects } from "../../lib/content";
+import { siteUrl } from "../../lib/site";
 
 export async function generateStaticParams() {
   const projects = await getProjects();
@@ -16,10 +17,18 @@ export async function generateMetadata(
   const { slug } = await props.params;
   const project = await getProject(slug);
 
+  if (!project) return {};
+
+  const film = project.kind === "motion";
+  const title = film ? `${project.title}, Film` : project.title;
+  const description = film
+    ? `${project.title} — film directed by Francis Boissier, photographer and director based in London.`
+    : `${project.title} — photography by Francis Boissier, photographer and director based in London.`;
+
   return {
-    title: project
-      ? `${project.title}, Francis Boissier`
-      : "Francis Boissier Photography",
+    title,
+    description,
+    alternates: { canonical: `/projects/${slug}` },
   };
 }
 
@@ -37,8 +46,38 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Francis Boissier",
+                item: siteUrl,
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: project.kind === "motion" ? "Film" : "Stills",
+                item: `${siteUrl}${index}`,
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: project.title,
+                item: `${siteUrl}/projects/${slug}`,
+              },
+            ],
+          }),
+        }}
+      />
+
       <div className="page-intro flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-        <h2>{project.title}</h2>
+        <h1>{project.title}</h1>
         <TextLink href={index} label="Close" />
       </div>
 

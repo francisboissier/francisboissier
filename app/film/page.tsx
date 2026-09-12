@@ -3,7 +3,10 @@ import { GalleryRow } from "../components/GalleryRow";
 import { getFilms, packRows } from "../lib/content";
 
 export const metadata: Metadata = {
-  title: "Film, Francis Boissier",
+  title: "Film",
+  description:
+    "Moving image and film direction by Francis Boissier, including fashion campaigns, editorial films and behind the scenes work.",
+  alternates: { canonical: "/film" },
 };
 
 export default async function FilmPage() {
@@ -16,10 +19,18 @@ export default async function FilmPage() {
     }));
 
   return (
-    <div className="gallery">
-      {packRows(covers).map((items, position) => (
-        <GalleryRow key={items[0].src} items={items} priority={position === 0} />
-      ))}
-    </div>
+    <>
+      <h1 className="sr-only">Film</h1>
+
+      <div className="gallery">
+        {packRows(covers).map((items, position) => (
+          <GalleryRow
+            key={items[0].src}
+            items={items}
+            priority={position === 0}
+          />
+        ))}
+      </div>
+    </>
   );
 }

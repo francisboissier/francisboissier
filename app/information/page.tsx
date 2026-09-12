@@ -5,7 +5,10 @@ import { getInformation } from "../lib/content";
 import type { PortableTextBlock } from "@portabletext/types";
 
 export const metadata: Metadata = {
-  title: "Information & Contact, Francis Boissier",
+  title: "Information & Contact",
+  description:
+    "About Francis Boissier, photographer and director based in London. Clients, publications, representation and contact details.",
+  alternates: { canonical: "/information" },
 };
 
 function MetaSection({
@@ -30,7 +33,7 @@ export default async function InformationPage() {
   return (
     <>
       <div className="page-intro">
-        <h2>Information &amp; Contact</h2>
+        <h1>Information &amp; Contact</h1>
       </div>
 
       <div className="information stagger">

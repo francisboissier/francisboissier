@@ -15,7 +15,7 @@ export function SiteHeader() {
 
   return (
     <header className="masthead flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-      <h1>
+      <p className="masthead-name">
         <Link href="/" className="text-link">
           <span className="swap">
             <span className="roman">Francis Boissier</span>
@@ -24,7 +24,7 @@ export function SiteHeader() {
             </span>
           </span>
         </Link>
-      </h1>
+      </p>
 
       <nav>
         <ul className="flex gap-y-1">
