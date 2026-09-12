@@ -2,7 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import type { GalleryItem } from "../lib/content";
 
-function Media({ item, priority }: { item: GalleryItem; priority: boolean }) {
+function Media({
+  item,
+  priority,
+  sizes,
+}: {
+  item: GalleryItem;
+  priority: boolean;
+  sizes: string;
+}) {
   if (item.kind === "video") {
     return (
       <video
@@ -26,7 +34,7 @@ function Media({ item, priority }: { item: GalleryItem; priority: boolean }) {
       height={item.height}
       alt=""
       priority={priority}
-      sizes="(max-width: 600px) 100vw, 45vw"
+      sizes={sizes}
     />
   );
 }
@@ -40,12 +48,19 @@ export function GalleryRow({
   priority?: boolean;
   plain?: boolean;
 }) {
+  const totalRatio = items.reduce((sum, item) => sum + item.ratio, 0);
+
   return (
     <div className="gallery-row reveal">
       {items.map((item) => {
+        const share = Math.ceil((item.ratio / totalRatio) * 90);
         const frame = (
           <span className="frame">
-            <Media item={item} priority={priority} />
+            <Media
+              item={item}
+              priority={priority}
+              sizes={`(max-width: 600px) 100vw, ${share}vw`}
+            />
           </span>
         );
 

@@ -33,7 +33,7 @@ export function Plate({
             height={item.height}
             alt=""
             priority={priority}
-            sizes="(max-width: 600px) 100vw, 80vw"
+            sizes="(max-width: 600px) 100vw, 90vw"
           />
         )}
       </span>
