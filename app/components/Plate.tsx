@@ -16,7 +16,7 @@ export function Plate({
       <span className="frame">
         {item.kind === "video" ? (
           <video
-            src={item.sources ? undefined : item.src}
+            src={item.src}
             poster={item.poster}
             width={item.width}
             height={item.height}
@@ -25,17 +25,7 @@ export function Plate({
             muted
             playsInline
             preload="metadata"
-          >
-            {item.sources ? (
-              <>
-                <source
-                  src={item.sources.av1}
-                  type='video/mp4; codecs="av01.0.05M.08"'
-                />
-                <source src={item.sources.h264} type="video/mp4" />
-              </>
-            ) : null}
-          </video>
+          />
         ) : (
           <Image
             src={item.src}

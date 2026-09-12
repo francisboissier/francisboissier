@@ -66,6 +66,14 @@ export const project = defineType({
                 "Shown before the film plays. Sets the film's proportions.",
               type: "image",
             }),
+            defineField({
+              name: "tile",
+              title: "Homepage loop",
+              description:
+                "Optional small version played in the homepage grid. Leave empty and the full film is used instead.",
+              type: "file",
+              options: { accept: "video/mp4,video/webm" },
+            }),
           ],
           preview: {
             select: { media: "poster", filename: "video.asset.originalFilename" },

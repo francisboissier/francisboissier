@@ -1,5 +1,3 @@
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { groq } from "next-sanity";
 import { client } from "../../sanity/lib/client";
 
@@ -10,7 +8,6 @@ export type GalleryItem = {
   src: string;
   poster?: string;
   tile?: string;
-  sources?: { av1: string; h264: string };
   width: number;
   height: number;
   ratio: number;
@@ -59,46 +56,24 @@ const PROJECT_FIELDS = groq`
   "images": images[] ${IMAGE},
   "poster": poster ${IMAGE},
   "video": video.asset->url,
-  "films": films[]{ "poster": poster ${IMAGE}, "video": video.asset->url }
+  "films": films[]{
+    "poster": poster ${IMAGE},
+    "video": video.asset->url,
+    "tile": tile.asset->url
+  }
 `;
 
 function posterUrl(url: string) {
   return `${url}?w=1200&q=78&auto=format&fit=max`;
 }
 
-function readIndex(path: string): Set<string> {
-  try {
-    return new Set(
-      JSON.parse(readFileSync(join(process.cwd(), path), "utf8")) as string[],
-    );
-  } catch {
-    return new Set();
-  }
-}
-
-const tiles = readIndex("public/tiles/index.json");
-const webFilms = readIndex("public/films/index.json");
-
-function assetId(video: string) {
-  return video.split("/").pop()?.replace(/\.[^.]+$/, "") ?? "";
-}
-
-function tileUrl(video: string) {
-  const id = assetId(video);
-  return tiles.has(id) ? `/tiles/${id}.mp4` : undefined;
-}
-
-function filmSources(video: string) {
-  const id = assetId(video);
-  if (!webFilms.has(id)) return undefined;
-  return { av1: `/films/${id}.av1.mp4`, h264: `/films/${id}.h264.mp4` };
-}
 
 function toItem(
   raw: RawImage,
   slug: string,
   title: string,
   video?: string,
+  tile?: string,
 ): GalleryItem | null {
   if (!raw?.url || !raw.width || !raw.height) return null;
 
@@ -108,8 +83,7 @@ function toItem(
     title,
     src: video ?? raw.url,
     poster: video ? posterUrl(raw.url) : undefined,
-    tile: video ? tileUrl(video) : undefined,
-    sources: video ? filmSources(video) : undefined,
+    tile: tile ?? undefined,
     width: raw.width,
     height: raw.height,
     ratio: Number((raw.width / raw.height).toFixed(4)),
@@ -119,6 +93,7 @@ function toItem(
 type RawClip = {
   poster: RawImage;
   video: string | null;
+  tile: string | null;
 };
 
 type RawProject = {
@@ -138,13 +113,19 @@ function shapeProject(raw: RawProject): Project {
 
   const clips = raw.films?.length
     ? raw.films
-    : [{ poster: raw.poster, video: raw.video }];
+    : [{ poster: raw.poster, video: raw.video, tile: null }];
 
   const items =
     kind === "motion"
       ? (clips
           .map((clip) =>
-            toItem(clip.poster, slug, title, clip.video ?? undefined),
+            toItem(
+              clip.poster,
+              slug,
+              title,
+              clip.video ?? undefined,
+              clip.tile ?? undefined,
+            ),
           )
           .filter(Boolean) as GalleryItem[])
       : ((raw.images ?? [])
