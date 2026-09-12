@@ -3,10 +3,10 @@ import { FilmTile } from "../components/FilmTile";
 import { getProjects } from "../lib/content";
 
 export const metadata: Metadata = {
-  title: "Motion, Francis Boissier",
+  title: "Film, Francis Boissier",
 };
 
-export default async function MotionPage() {
+export default async function FilmPage() {
   const films = (await getProjects())
     .filter((project) => project.kind === "motion" && project.cover)
     .map((project) => project.cover!);
@@ -19,10 +19,6 @@ export default async function MotionPage() {
 
   return (
     <>
-      <div className="page-intro">
-        <h2>Motion</h2>
-      </div>
-
       <div className="gallery">
         {rows.map((row) => (
           <div key={row[0].src} className="gallery-row">

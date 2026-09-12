@@ -1,5 +1,4 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { BatchTileInput } from "../components/BatchTileInput";
 
 export const homepage = defineType({
   name: "homepage",
@@ -8,35 +7,11 @@ export const homepage = defineType({
   fields: [
     defineField({
       name: "gallery",
-      title: "Gallery",
+      title: "Projects",
       description:
-        "Drag to reorder. Rows are arranged automatically from each image's proportions.",
+        "One image or film per project, taken from the project's first image. Drag to reorder.",
       type: "array",
-      of: [
-        defineArrayMember({
-          type: "object",
-          name: "tile",
-          fields: [
-            defineField({
-              name: "image",
-              type: "image",
-              options: { hotspot: true },
-              validation: (rule) => rule.required(),
-            }),
-            defineField({
-              name: "project",
-              type: "reference",
-              to: [{ type: "project" }],
-              description: "Optional. Links this image to a project.",
-            }),
-          ],
-          preview: {
-            select: { media: "image", title: "project.title" },
-            prepare: ({ media, title }) => ({ title: title ?? "Unlinked", media }),
-          },
-        }),
-      ],
-      components: { input: BatchTileInput },
+      of: [defineArrayMember({ type: "reference", to: [{ type: "project" }] })],
     }),
   ],
   preview: { prepare: () => ({ title: "Home" }) },

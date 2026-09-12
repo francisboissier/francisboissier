@@ -123,16 +123,12 @@ export async function getProject(slug: string): Promise<Project | null> {
 }
 
 export async function getHomeItems(): Promise<GalleryItem[]> {
-  const raw = await client.fetch<
-    { image: RawImage; slug: string | null; title: string | null }[] | null
-  >(groq`*[_type == "homepage"][0].gallery[]{
-      "image": image ${IMAGE},
-      "slug": project->slug.current,
-      "title": project->title
-    }`);
+  const raw = await client.fetch<RawProject[] | null>(
+    groq`*[_type == "homepage"][0].gallery[]-> { ${PROJECT_FIELDS} }`,
+  );
 
   return ((raw ?? [])
-    .map((tile) => toItem(tile.image, tile.slug ?? "", tile.title ?? ""))
+    .map((project) => shapeProject(project).cover)
     .filter(Boolean) as GalleryItem[]);
 }
 

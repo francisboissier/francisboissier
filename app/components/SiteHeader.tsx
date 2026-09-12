@@ -1,13 +1,18 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { TextLink } from "./TextLink";
 
 const nav = [
   { label: "Stills", href: "/stills" },
-  { label: "Motion", href: "/motion" },
+  { label: "Film", href: "/film" },
   { label: "Information & Contact", href: "/information" },
 ];
 
 export function SiteHeader() {
+  const pathname = usePathname();
+
   return (
     <header className="masthead flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
       <h1>
@@ -25,7 +30,11 @@ export function SiteHeader() {
         <ul className="flex gap-y-1">
           {nav.map((item) => (
             <li key={item.label}>
-              <TextLink href={item.href} label={item.label} />
+              <TextLink
+                href={item.href}
+                label={item.label}
+                current={pathname === item.href}
+              />
             </li>
           ))}
         </ul>

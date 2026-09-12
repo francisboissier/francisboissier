@@ -4,10 +4,12 @@ export function TextLink({
   href,
   label,
   external = false,
+  current = false,
 }: {
   href: string;
   label: string;
   external?: boolean;
+  current?: boolean;
 }) {
   const inner = (
     <span className="swap">
@@ -27,7 +29,11 @@ export function TextLink({
   }
 
   return (
-    <Link href={href} className="text-link">
+    <Link
+      href={href}
+      className="text-link"
+      aria-current={current ? "page" : undefined}
+    >
       {inner}
     </Link>
   );

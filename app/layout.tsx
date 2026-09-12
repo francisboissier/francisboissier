@@ -1,15 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Newsreader } from "next/font/google";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
 import "./globals.css";
-
-const serif = Newsreader({
-  variable: "--font-serif",
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-});
 
 export const metadata: Metadata = {
   title: "Francis Boissier Photography",
@@ -27,8 +19,11 @@ if(d.readyState==="loading"){d.addEventListener("DOMContentLoaded",go);}else{go(
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={serif.variable} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://use.typekit.net" crossOrigin="" />
+        <link rel="preconnect" href="https://p.typekit.net" crossOrigin="" />
+        <link rel="stylesheet" href="https://use.typekit.net/imh4mdl.css" />
         <script dangerouslySetInnerHTML={{ __html: boot }} />
         <noscript>
           <style>{`main { opacity: 1 !important }`}</style>

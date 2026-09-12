@@ -6,8 +6,10 @@
   --color-black: #000000;
   --color-white: #ffffff;
 
-  --font-sans: var(--font-serif), Georgia, "Times New Roman", serif;
-  --font-serif: var(--font-serif), Georgia, "Times New Roman", serif;
+  --font-sans: "lemonde-journal", "le-monde-journal-std-2", Georgia,
+    "Times New Roman", serif;
+  --font-serif: "lemonde-journal", "le-monde-journal-std-2", Georgia,
+    "Times New Roman", serif;
 
   --text-base: 0.875rem;
   --text-base--line-height: 1.2;
@@ -21,6 +23,7 @@
   --column-gap: clamp(1rem, 2.4vw, 2.5rem);
   --row-gap: clamp(2.5rem, 5vw, 5.5rem);
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --muted: #8f8f8f;
 }
 
 @layer base {
@@ -157,6 +160,11 @@
   .group > .text-link {
     display: inline-block;
     padding-bottom: 0.85em;
+    max-width: 100%;
+  }
+
+  .group > .text-link .swap {
+    white-space: normal;
   }
 
   .gallery.gallery-tight {
@@ -310,9 +318,6 @@
   .caption {
     display: block;
     padding-top: 0.9em;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
   }
 }
 
@@ -349,6 +354,10 @@
 }
 
 @media (max-width: 600px) {
+  .masthead nav a[aria-current="page"] {
+    color: var(--muted);
+  }
+
   .gallery-row {
     flex-wrap: wrap;
     row-gap: var(--column-gap);
