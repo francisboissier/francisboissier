@@ -54,7 +54,8 @@ const PROJECT_FIELDS = groq`
   kind,
   "images": images[] ${IMAGE},
   "poster": poster ${IMAGE},
-  "video": video.asset->url
+  "video": video.asset->url,
+  "films": films[]{ "poster": poster ${IMAGE}, "video": video.asset->url }
 `;
 
 function posterUrl(url: string) {
@@ -81,6 +82,11 @@ function toItem(
   };
 }
 
+type RawClip = {
+  poster: RawImage;
+  video: string | null;
+};
+
 type RawProject = {
   slug: string | null;
   title: string | null;
@@ -88,6 +94,7 @@ type RawProject = {
   images: RawImage[] | null;
   poster: RawImage;
   video: string | null;
+  films: RawClip[] | null;
 };
 
 function shapeProject(raw: RawProject): Project {
@@ -95,11 +102,17 @@ function shapeProject(raw: RawProject): Project {
   const title = raw.title ?? "Untitled";
   const kind = raw.kind ?? "stills";
 
+  const clips = raw.films?.length
+    ? raw.films
+    : [{ poster: raw.poster, video: raw.video }];
+
   const items =
     kind === "motion"
-      ? ([toItem(raw.poster, slug, title, raw.video ?? undefined)].filter(
-          Boolean,
-        ) as GalleryItem[])
+      ? (clips
+          .map((clip) =>
+            toItem(clip.poster, slug, title, clip.video ?? undefined),
+          )
+          .filter(Boolean) as GalleryItem[])
       : ((raw.images ?? [])
           .map((image) => toItem(image, slug, title))
           .filter(Boolean) as GalleryItem[]);
@@ -122,14 +135,24 @@ export async function getProject(slug: string): Promise<Project | null> {
   return raw ? shapeProject(raw) : null;
 }
 
-export async function getStills(): Promise<Project[]> {
+async function getGalleryProjects(): Promise<Project[]> {
   const raw = await client.fetch<RawProject[] | null>(
     groq`*[_type == "homepage"][0].gallery[]-> { ${PROJECT_FIELDS} }`,
   );
 
-  return (raw ?? [])
-    .map(shapeProject)
-    .filter((project) => project.slug !== "" && project.kind === "stills");
+  return (raw ?? []).map(shapeProject).filter((project) => project.slug !== "");
+}
+
+export async function getStills(): Promise<Project[]> {
+  return (await getGalleryProjects()).filter(
+    (project) => project.kind === "stills",
+  );
+}
+
+export async function getFilms(): Promise<Project[]> {
+  return (await getGalleryProjects()).filter(
+    (project) => project.kind === "motion",
+  );
 }
 
 export async function getHomeItems(): Promise<GalleryItem[]> {

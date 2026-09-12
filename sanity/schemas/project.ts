@@ -41,22 +41,50 @@ export const project = defineType({
       components: { input: BatchImageInput },
     }),
     defineField({
-      name: "video",
-      title: "Film",
-      type: "file",
+      name: "films",
+      title: "Films",
+      description:
+        "Drag to reorder. The first film's poster frame is used as the cover.",
+      type: "array",
       hidden: ({ parent }) => parent?.kind !== "motion",
-      options: { accept: "video/mp4,video/webm" },
-    }),
-    defineField({
-      name: "poster",
-      title: "Poster frame",
-      description: "Shown before the film plays. Sets the film's proportions.",
-      type: "image",
-      hidden: ({ parent }) => parent?.kind !== "motion",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "clip",
+          title: "Film",
+          fields: [
+            defineField({
+              name: "video",
+              title: "File",
+              type: "file",
+              options: { accept: "video/mp4,video/webm" },
+            }),
+            defineField({
+              name: "poster",
+              title: "Poster frame",
+              description:
+                "Shown before the film plays. Sets the film's proportions.",
+              type: "image",
+            }),
+          ],
+          preview: {
+            select: { media: "poster", filename: "video.asset.originalFilename" },
+            prepare: ({ media, filename }) => ({
+              title: filename ?? "Film",
+              media,
+            }),
+          },
+        }),
+      ],
     }),
   ],
   preview: {
-    select: { title: "title", kind: "kind", media: "images.0", poster: "poster" },
+    select: {
+      title: "title",
+      kind: "kind",
+      media: "images.0",
+      poster: "films.0.poster",
+    },
     prepare: ({ title, kind, media, poster }) => ({
       title,
       subtitle: kind === "motion" ? "Film" : "Stills",
