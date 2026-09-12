@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { groq } from "next-sanity";
 import { client } from "../../sanity/lib/client";
 
@@ -7,6 +9,7 @@ export type GalleryItem = {
   title: string;
   src: string;
   poster?: string;
+  tile?: string;
   width: number;
   height: number;
   ratio: number;
@@ -62,6 +65,25 @@ function posterUrl(url: string) {
   return `${url}?w=1200&q=78&auto=format&fit=max`;
 }
 
+function readTiles(): Set<string> {
+  try {
+    return new Set(
+      JSON.parse(
+        readFileSync(join(process.cwd(), "public/tiles/index.json"), "utf8"),
+      ) as string[],
+    );
+  } catch {
+    return new Set();
+  }
+}
+
+const tiles = readTiles();
+
+function tileUrl(video: string) {
+  const id = video.split("/").pop()?.replace(/\.[^.]+$/, "") ?? "";
+  return tiles.has(id) ? `/tiles/${id}.mp4` : undefined;
+}
+
 function toItem(
   raw: RawImage,
   slug: string,
@@ -76,6 +98,7 @@ function toItem(
     title,
     src: video ?? raw.url,
     poster: video ? posterUrl(raw.url) : undefined,
+    tile: video ? tileUrl(video) : undefined,
     width: raw.width,
     height: raw.height,
     ratio: Number((raw.width / raw.height).toFixed(4)),

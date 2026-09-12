@@ -14,7 +14,7 @@ function Media({
   if (item.kind === "video") {
     return (
       <video
-        src={item.src}
+        src={item.tile ?? item.src}
         poster={item.poster}
         width={item.width}
         height={item.height}
