@@ -412,7 +412,8 @@
     animation-delay: calc(var(--i, 0) * 30ms);
   }
 
-  .view-exit .gallery {
+  .view-exit .gallery,
+  .view-exit > .gallery-slot {
     animation: retract 190ms var(--ease-out) both;
     animation-delay: calc(var(--i, 0) * 22ms);
   }

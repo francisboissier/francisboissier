@@ -122,6 +122,16 @@ export async function getProject(slug: string): Promise<Project | null> {
   return raw ? shapeProject(raw) : null;
 }
 
+export async function getStills(): Promise<Project[]> {
+  const raw = await client.fetch<RawProject[] | null>(
+    groq`*[_type == "homepage"][0].gallery[]-> { ${PROJECT_FIELDS} }`,
+  );
+
+  return (raw ?? [])
+    .map(shapeProject)
+    .filter((project) => project.slug !== "" && project.kind === "stills");
+}
+
 export async function getHomeItems(): Promise<GalleryItem[]> {
   const raw = await client.fetch<RawProject[] | null>(
     groq`*[_type == "homepage"][0].gallery[]-> { ${PROJECT_FIELDS} }`,

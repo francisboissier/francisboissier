@@ -6,10 +6,9 @@ import { flushSync } from "react-dom";
 import type { GalleryItem } from "../lib/content";
 import { GalleryRow } from "./GalleryRow";
 
-type Group = {
+type Shoot = {
   slug: string;
   title: string;
-  rows: GalleryItem[][];
 };
 
 const views = [
@@ -19,7 +18,13 @@ const views = [
 
 type View = (typeof views)[number]["id"];
 
-export function StillsView({ groups }: { groups: Group[] }) {
+export function StillsView({
+  rows,
+  shoots,
+}: {
+  rows: GalleryItem[][];
+  shoots: Shoot[];
+}) {
   const [view, setView] = useState<View>("grid");
   const [leaving, setLeaving] = useState<View | null>(null);
 
@@ -88,57 +93,33 @@ export function StillsView({ groups }: { groups: Group[] }) {
       {view === "grid" ? (
         <div
           key="grid"
-          className={`groups ${leaving ? "view-exit" : "view-enter"}`}
+          className={`gallery ${leaving ? "view-exit" : "view-enter"}`}
           onAnimationEnd={onRetracted}
         >
-          {groups.map((group, groupPosition) => (
-            <section
-              key={group.slug}
-              className="group"
-              style={{ "--i": groupPosition } as React.CSSProperties}
+          {rows.map((items, position) => (
+            <div
+              key={items[0].src}
+              className="gallery-slot"
+              style={{ "--i": position } as React.CSSProperties}
+              data-last={position === rows.length - 1}
             >
-              <Link
-                href={`/projects/${group.slug}`}
-                className="text-link"
-                style={{ viewTransitionName: `shoot-${group.slug}` }}
-              >
-                <span className="swap">
-                  <span className="roman">{group.title}</span>
-                  <span className="cursive" aria-hidden="true">
-                    {group.title}
-                  </span>
-                </span>
-              </Link>
-
-              <div
-                className="gallery gallery-tight"
-                data-last={groupPosition === groups.length - 1}
-              >
-                {group.rows.map((items, position) => (
-                  <GalleryRow
-                    key={items[0].src}
-                    items={items}
-                    priority={groupPosition === 0 && position === 0}
-                    plain
-                  />
-                ))}
-              </div>
-            </section>
+              <GalleryRow items={items} priority={position === 0} />
+            </div>
           ))}
         </div>
       ) : (
         <ul key="list" className="stills-list">
-          {groups.map((group) => (
-            <li key={group.slug}>
+          {shoots.map((shoot) => (
+            <li key={shoot.slug}>
               <Link
-                href={`/projects/${group.slug}`}
+                href={`/projects/${shoot.slug}`}
                 className="text-link"
-                style={{ viewTransitionName: `shoot-${group.slug}` }}
+                style={{ viewTransitionName: `shoot-${shoot.slug}` }}
               >
                 <span className="swap">
-                  <span className="roman">{group.title}</span>
+                  <span className="roman">{shoot.title}</span>
                   <span className="cursive" aria-hidden="true">
-                    {group.title}
+                    {shoot.title}
                   </span>
                 </span>
               </Link>

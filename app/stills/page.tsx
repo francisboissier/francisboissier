@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
 import { StillsView } from "../components/StillsView";
-import { chunkGroupRows, getProjects } from "../lib/content";
+import { getStills, packRows } from "../lib/content";
 
 export const metadata: Metadata = {
   title: "Stills, Francis Boissier",
 };
 
 export default async function StillsPage() {
-  const groups = (await getProjects())
-    .filter((project) => project.kind === "stills" && project.items.length > 0)
-    .map((project) => ({
-      slug: project.slug,
-      title: project.title,
-      rows: chunkGroupRows(project.items),
-    }));
+  const projects = (await getStills()).filter((project) => project.cover);
 
-  return <StillsView groups={groups} />;
+  return (
+    <StillsView
+      rows={packRows(projects.map((project) => project.cover!))}
+      shoots={projects.map((project) => ({
+        slug: project.slug,
+        title: project.title,
+      }))}
+    />
+  );
 }
