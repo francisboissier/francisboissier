@@ -54,3 +54,6 @@ dist/
 # archival source media (not deployed)
 source-media/
 .DS_Store
+
+# incoming masters, archived to source-media and never deployed
+public/home/

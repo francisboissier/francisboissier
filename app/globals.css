@@ -77,7 +77,7 @@
 @layer components {
 
   .masthead {
-    font-size: clamp(1rem, 2.6vw, 1.75rem);
+    font-size: clamp(1.125rem, 2.6vw, 1.75rem);
     line-height: 1.1;
   }
 
