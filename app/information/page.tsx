@@ -32,9 +32,7 @@ export default async function InformationPage() {
 
   return (
     <>
-      <div className="page-intro">
-        <h1>Information &amp; Contact</h1>
-      </div>
+      <h1 className="sr-only">Information &amp; Contact</h1>
 
       <div className="information stagger">
         <div className="info" style={{ "--i": 0 } as React.CSSProperties}>

@@ -4,17 +4,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { TextLink } from "./TextLink";
 
-const nav = [
+const sections = [
   { label: "Photography", href: "/photography" },
   { label: "Film", href: "/film" },
-  { label: "Information & Contact", href: "/information" },
 ];
+
+const contact = { label: "Information & Contact", href: "/information" };
 
 export function SiteHeader() {
   const pathname = usePathname();
 
   return (
-    <header className="masthead flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+    <header className="masthead">
       <p className="masthead-name">
         <Link href="/" className="text-link">
           <span className="swap">
@@ -26,10 +27,10 @@ export function SiteHeader() {
         </Link>
       </p>
 
-      <nav>
-        <ul className="flex gap-y-1">
-          {nav.map((item) => (
-            <li key={item.label}>
+      <nav className="masthead-sections" aria-label="Work">
+        <ul>
+          {sections.map((item) => (
+            <li key={item.href}>
               <TextLink
                 href={item.href}
                 label={item.label}
@@ -38,6 +39,14 @@ export function SiteHeader() {
             </li>
           ))}
         </ul>
+      </nav>
+
+      <nav className="masthead-contact" aria-label="Contact">
+        <TextLink
+          href={contact.href}
+          label={contact.label}
+          current={pathname === contact.href}
+        />
       </nav>
     </header>
   );
