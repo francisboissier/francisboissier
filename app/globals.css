@@ -112,7 +112,11 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    column-gap: clamp(0.55rem, 1.5vw, 1.25rem);
+    column-gap: 0.3em;
+  }
+
+  .masthead-sections li:first-child::after {
+    content: ",";
   }
 
   .text-link .swap {
@@ -380,11 +384,11 @@
 
 @media (min-width: 601px) {
   .masthead-sections .roman {
-    visibility: hidden;
+    font-style: italic;
   }
 
-  .masthead-sections .cursive {
-    visibility: visible;
+  .masthead-sections li:first-child::after {
+    font-style: italic;
   }
 }
 
@@ -407,14 +411,6 @@
 
   .masthead-contact {
     grid-row: 3;
-  }
-
-  .masthead-sections ul {
-    column-gap: 0.3em;
-  }
-
-  .masthead-sections li:first-child::after {
-    content: ",";
   }
 
   .masthead a[aria-current="page"] {
