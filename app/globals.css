@@ -214,6 +214,7 @@
     padding-top: clamp(2.5rem, 5vw, 5rem);
   }
 
+  .page-intro h1,
   .page-intro h2 {
     font-style: italic;
   }

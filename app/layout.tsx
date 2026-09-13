@@ -18,11 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description,
     alternates: { canonical: "/" },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: { index: true, follow: true, "max-image-preview": "large" },
-    },
+    robots: { "max-image-preview": "large" },
     icons: {
       icon: [
         { url: "/favicon.ico", sizes: "any" },
