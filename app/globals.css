@@ -358,6 +358,30 @@
 }
 
 @media (max-width: 600px) {
+  .masthead {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 0.3rem;
+  }
+
+  .masthead .masthead-name {
+    font-size: 1.75rem;
+  }
+
+  .masthead nav ul {
+    flex-wrap: wrap;
+    column-gap: 0.3em;
+    row-gap: 0;
+  }
+
+  .masthead nav li:first-child::after {
+    content: ",";
+  }
+
+  .masthead nav li:last-child {
+    flex-basis: 100%;
+  }
+
   .masthead nav a[aria-current="page"] {
     color: var(--muted);
   }
