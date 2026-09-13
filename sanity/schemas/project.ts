@@ -32,6 +32,29 @@ export const project = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "counterpart",
+      title: "Companion project",
+      description:
+        "The film or photography from the same shoot. When set, the homepage shows one tile that opens both together, while Photography and Film still show this project on its own.",
+      type: "reference",
+      to: [{ type: "project" }],
+    }),
+    defineField({
+      name: "leadWith",
+      title: "Show first together",
+      description: "Which medium leads on the combined page.",
+      type: "string",
+      initialValue: "photography",
+      options: {
+        list: [
+          { title: "Photography", value: "photography" },
+          { title: "Film", value: "film" },
+        ],
+        layout: "radio",
+      },
+      hidden: ({ parent }) => !parent?.counterpart,
+    }),
+    defineField({
       name: "images",
       title: "Images",
       description: "Drag to reorder. The first image is used as the cover.",

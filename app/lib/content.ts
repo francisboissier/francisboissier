@@ -8,6 +8,7 @@ export type GalleryItem = {
   src: string;
   poster?: string;
   tile?: string;
+  href?: string;
   width: number;
   height: number;
   ratio: number;
@@ -19,6 +20,14 @@ export type Project = {
   kind: "stills" | "motion";
   cover: GalleryItem | null;
   items: GalleryItem[];
+  leadWith: "photography" | "film";
+  hasCounterpart: boolean;
+};
+
+export type Shoot = {
+  title: string;
+  photography: Project;
+  film: Project;
 };
 
 export type Information = {
@@ -104,7 +113,16 @@ type RawProject = {
   poster: RawImage;
   video: string | null;
   films: RawClip[] | null;
+  leadWith?: "photography" | "film" | null;
+  counterpartSlug?: string | null;
+  counterpart?: RawProject | null;
 };
+
+const SHOOT_FIELDS = groq`
+  ${PROJECT_FIELDS},
+  leadWith,
+  "counterpart": counterpart-> { ${PROJECT_FIELDS}, leadWith }
+`;
 
 function shapeProject(raw: RawProject): Project {
   const slug = raw.slug ?? "";
@@ -132,7 +150,41 @@ function shapeProject(raw: RawProject): Project {
           .map((image) => toItem(image, slug, title))
           .filter(Boolean) as GalleryItem[]);
 
-  return { slug, title, kind, cover: items[0] ?? null, items };
+  return {
+    slug,
+    title,
+    kind,
+    cover: items[0] ?? null,
+    items,
+    leadWith: raw.leadWith ?? "photography",
+    hasCounterpart: Boolean(raw.counterpart ?? raw.counterpartSlug),
+  };
+}
+
+export async function getShoot(slug: string): Promise<Shoot | null> {
+  const raw = await client.fetch<RawProject | null>(
+    groq`*[_type == "project" && slug.current == $slug][0] { ${SHOOT_FIELDS} }`,
+    { slug },
+  );
+
+  if (!raw?.counterpart) return null;
+
+  const project = shapeProject(raw);
+  const counterpart = shapeProject(raw.counterpart);
+  const photography = project.kind === "stills" ? project : counterpart;
+  const film = project.kind === "motion" ? project : counterpart;
+
+  if (!photography.items.length || !film.items.length) return null;
+
+  return { title: project.title, photography, film };
+}
+
+export async function getShootSlugs(): Promise<string[]> {
+  const slugs = await client.fetch<string[] | null>(
+    groq`*[_type == "project" && defined(counterpart) && kind == "stills"
+      && defined(slug.current)].slug.current`,
+  );
+  return slugs ?? [];
 }
 
 export async function getProjects(): Promise<Project[]> {
@@ -144,7 +196,10 @@ export async function getProjects(): Promise<Project[]> {
 
 export async function getProject(slug: string): Promise<Project | null> {
   const raw = await client.fetch<RawProject | null>(
-    groq`*[_type == "project" && slug.current == $slug][0] { ${PROJECT_FIELDS} }`,
+    groq`*[_type == "project" && slug.current == $slug][0] {
+      ${PROJECT_FIELDS},
+      "counterpartSlug": counterpart->slug.current
+    }`,
     { slug },
   );
   return raw ? shapeProject(raw) : null;
@@ -172,12 +227,33 @@ export async function getFilms(): Promise<Project[]> {
 
 export async function getHomeItems(): Promise<GalleryItem[]> {
   const raw = await client.fetch<RawProject[] | null>(
-    groq`*[_type == "homepage"][0].gallery[]-> { ${PROJECT_FIELDS} }`,
+    groq`*[_type == "homepage"][0].gallery[]-> {
+      ${PROJECT_FIELDS},
+      "counterpartSlug": counterpart->slug.current
+    }`,
   );
 
-  return ((raw ?? [])
-    .map((project) => shapeProject(project).cover)
-    .filter(Boolean) as GalleryItem[]);
+  const seen = new Set<string>();
+  const items: GalleryItem[] = [];
+
+  for (const entry of raw ?? []) {
+    const project = shapeProject(entry);
+    if (!project.cover || seen.has(project.slug)) continue;
+
+    seen.add(project.slug);
+    if (entry.counterpartSlug) seen.add(entry.counterpartSlug);
+
+    const shootSlug =
+      project.kind === "stills" ? project.slug : entry.counterpartSlug;
+
+    items.push(
+      project.hasCounterpart && shootSlug
+        ? { ...project.cover, href: `/projects/${shootSlug}/all` }
+        : project.cover,
+    );
+  }
+
+  return items;
 }
 
 export async function getInformation(): Promise<Information | null> {

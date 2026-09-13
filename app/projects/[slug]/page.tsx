@@ -20,7 +20,8 @@ export async function generateMetadata(
   if (!project) return {};
 
   const film = project.kind === "motion";
-  const title = film ? `${project.title}, Film` : project.title;
+  const suffix = film ? ", Film" : project.hasCounterpart ? ", Photography" : "";
+  const title = `${project.title}${suffix}`;
   const description = film
     ? `${project.title} — film directed by Francis Boissier, photographer and director based in London.`
     : `${project.title} — photography by Francis Boissier, photographer and director based in London.`;

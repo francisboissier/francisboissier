@@ -73,7 +73,7 @@ export function GalleryRow({
             {plain ? (
               frame
             ) : (
-              <Link href={`/projects/${item.slug}`}>
+              <Link href={item.href ?? `/projects/${item.slug}`}>
                 {frame}
                 <span className="caption">{item.title}</span>
               </Link>
