@@ -24,7 +24,7 @@ export const project = defineType({
       initialValue: "stills",
       options: {
         list: [
-          { title: "Stills", value: "stills" },
+          { title: "Photography", value: "stills" },
           { title: "Film", value: "motion" },
         ],
         layout: "radio",
@@ -95,7 +95,7 @@ export const project = defineType({
     },
     prepare: ({ title, kind, media, poster }) => ({
       title,
-      subtitle: kind === "motion" ? "Film" : "Stills",
+      subtitle: kind === "motion" ? "Film" : "Photography",
       media: kind === "motion" ? poster : media,
     }),
   },

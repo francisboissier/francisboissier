@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
-import { StillsView } from "../components/StillsView";
-import { getStills, packRows } from "../lib/content";
+import { PhotographyView } from "../components/PhotographyView";
+import { getPhotography, packRows } from "../lib/content";
 
 export const metadata: Metadata = {
-  title: "Stills",
+  title: "Photography",
   description:
     "Photography by Francis Boissier for Arena Homme+, POP, Hero, Heroine, Manner and Replica Man, alongside campaign and portrait work.",
-  alternates: { canonical: "/stills" },
+  alternates: { canonical: "/photography" },
 };
 
-export default async function StillsPage() {
-  const projects = (await getStills()).filter((project) => project.cover);
+export default async function PhotographyPage() {
+  const projects = (await getPhotography()).filter((project) => project.cover);
 
   return (
     <>
-      <h1 className="sr-only">Stills</h1>
+      <h1 className="sr-only">Photography</h1>
 
-      <StillsView
+      <PhotographyView
         rows={packRows(projects.map((project) => project.cover!))}
         shoots={projects.map((project) => ({
           slug: project.slug,

@@ -18,7 +18,7 @@ const views = [
 
 type View = (typeof views)[number]["id"];
 
-export function StillsView({
+export function PhotographyView({
   rows,
   shoots,
 }: {
@@ -108,7 +108,7 @@ export function StillsView({
           ))}
         </div>
       ) : (
-        <ul key="list" className="stills-list">
+        <ul key="list" className="photography-list">
           {shoots.map((shoot) => (
             <li key={shoot.slug}>
               <Link

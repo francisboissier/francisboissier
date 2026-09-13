@@ -42,7 +42,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
   const position = projects.findIndex((entry) => entry.slug === slug);
   const previous = projects[(position - 1 + projects.length) % projects.length];
   const next = projects[(position + 1) % projects.length];
-  const index = project.kind === "motion" ? "/film" : "/stills";
+  const index = project.kind === "motion" ? "/film" : "/photography";
 
   return (
     <>
@@ -62,7 +62,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
               {
                 "@type": "ListItem",
                 position: 2,
-                name: project.kind === "motion" ? "Film" : "Stills",
+                name: project.kind === "motion" ? "Film" : "Photography",
                 item: `${siteUrl}${index}`,
               },
               {

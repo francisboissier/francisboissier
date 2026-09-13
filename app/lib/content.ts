@@ -158,7 +158,7 @@ async function getGalleryProjects(): Promise<Project[]> {
   return (raw ?? []).map(shapeProject).filter((project) => project.slug !== "");
 }
 
-export async function getStills(): Promise<Project[]> {
+export async function getPhotography(): Promise<Project[]> {
   return (await getGalleryProjects()).filter(
     (project) => project.kind === "stills",
   );

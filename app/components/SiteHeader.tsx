@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { TextLink } from "./TextLink";
 
 const nav = [
-  { label: "Stills", href: "/stills" },
+  { label: "Photography", href: "/photography" },
   { label: "Film", href: "/film" },
   { label: "Information & Contact", href: "/information" },
 ];
