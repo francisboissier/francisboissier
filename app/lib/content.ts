@@ -213,7 +213,11 @@ export function packRows(items: GalleryItem[]): GalleryItem[][] {
     }
   }
 
-  if (current.length) rows.push(current);
+  if (current.length) {
+    if (sum < 1 && rows.length) rows[rows.length - 1].push(...current);
+    else rows.push(current);
+  }
+
   return rows;
 }
 

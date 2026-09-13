@@ -369,6 +369,7 @@
 
   .gallery-item {
     flex-basis: calc(var(--ratio) * 41%);
+    flex-grow: calc(var(--ratio) * 100);
   }
 }
 
