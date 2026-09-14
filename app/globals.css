@@ -241,6 +241,7 @@
     z-index: 100;
     display: grid;
     place-items: center;
+    overflow: hidden;
     background: var(--color-white);
     animation: preloader-out var(--out) var(--ease-out) forwards;
     animation-delay: calc(
@@ -249,27 +250,24 @@
   }
 
   .preloader-frame {
-    grid-area: 1 / 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
+    position: absolute;
+    top: calc(var(--y) * 1%);
+    left: calc(var(--x) * 1%);
     opacity: 0;
     animation: frame-in var(--in) var(--ease-out) forwards;
     animation-delay: calc(var(--i) * var(--step));
   }
 
   .preloader-frame img {
-    width: auto;
+    width: calc(var(--w) * 1vw);
     height: auto;
-    max-width: 68vw;
-    max-height: 62vh;
-    object-fit: contain;
+    max-width: none;
   }
 
   .preloader-name {
     grid-area: 1 / 1;
+    position: relative;
+    z-index: 1;
     margin: 0;
     padding-inline: var(--frame);
     text-align: center;
@@ -464,6 +462,14 @@
 
   .masthead a[aria-current="page"] {
     color: var(--muted);
+  }
+
+  .preloader-frame {
+    top: calc(var(--y) * 0.8%);
+  }
+
+  .preloader-frame img {
+    width: calc(var(--w) * 2.2vw);
   }
 
   .gallery-row {
