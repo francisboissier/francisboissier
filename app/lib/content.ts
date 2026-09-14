@@ -256,6 +256,33 @@ export async function getHomeItems(): Promise<GalleryItem[]> {
   return items;
 }
 
+export type PreloaderImage = {
+  src: string;
+  width: number;
+  height: number;
+  ratio: number;
+};
+
+export async function getPreloaderImages(): Promise<PreloaderImage[]> {
+  const raw = await client.fetch<RawImage[] | null>(
+    groq`*[_type == "preloader"][0].images[] ${IMAGE}`,
+  );
+
+  const images: PreloaderImage[] = [];
+
+  for (const image of raw ?? []) {
+    if (!image?.url || !image.width || !image.height) continue;
+    images.push({
+      src: image.url,
+      width: image.width,
+      height: image.height,
+      ratio: Number((image.width / image.height).toFixed(4)),
+    });
+  }
+
+  return images;
+}
+
 export async function getInformation(): Promise<Information | null> {
   return client.fetch<Information | null>(groq`*[_type == "information"][0]{
       intro, email, representation, studio, instagram,

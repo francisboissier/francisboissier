@@ -6,7 +6,12 @@ import { apiVersion, dataset, projectId } from "./sanity/env";
 import { schemaTypes } from "./sanity/schemas";
 import { structure } from "./sanity/structure";
 
-const SINGLETON_TYPES = new Set(["homepage", "information", "siteSettings"]);
+const SINGLETON_TYPES = new Set([
+  "homepage",
+  "preloader",
+  "information",
+  "siteSettings",
+]);
 
 export default defineConfig({
   name: "francisboissier",

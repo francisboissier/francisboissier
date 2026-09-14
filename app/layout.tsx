@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
+import { Preloader } from "./components/Preloader";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
-import { getSettings } from "./lib/content";
+import { getPreloaderImages, getSettings } from "./lib/content";
 import { siteDescription, siteName, siteUrl } from "./lib/site";
 import "./globals.css";
 
@@ -51,7 +52,9 @@ setTimeout(reveal,1500);function go(){var f=d.images[0],m=f&&f.decode?f.decode()
 Promise.all([d.fonts&&d.fonts.ready,m]).then(reveal,reveal);}
 if(d.readyState==="loading"){d.addEventListener("DOMContentLoaded",go);}else{go();}})();`
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const preloaderImages = await getPreloaderImages();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -64,6 +67,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </noscript>
       </head>
       <body>
+        <Preloader images={preloaderImages} />
         <SiteHeader />
         <main>{children}</main>
         <SiteFooter />
