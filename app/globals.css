@@ -231,11 +231,22 @@
   }
 
   .preloader {
-    --sequence: 5s;
-    --step: max(0.28s, calc(var(--sequence) / var(--frames)));
-    --in: min(0.2s, calc(var(--step) * 0.6));
-    --hold: 0.6s;
+    --sequence: 4s;
+    --step: max(0.25s, calc(var(--sequence) / var(--frames)));
+    --in: min(0.3s, calc(var(--step) * 0.7));
+    --settle: 0.25s;
+    --fade: 0.5s;
+    --name-in: 0.5s;
+    --name-hold: 0.7s;
+    --name-out: 0.45s;
     --out: 0.5s;
+
+    --images-leave: calc(var(--frames) * var(--step) + var(--settle));
+    --name-enter: calc(var(--images-leave) + var(--fade));
+    --name-leave: calc(
+      var(--name-enter) + var(--name-in) + var(--name-hold)
+    );
+    --reveal: calc(var(--name-leave) + var(--name-out));
     position: fixed;
     inset: 0;
     z-index: 100;
@@ -243,10 +254,7 @@
     place-items: center;
     overflow: hidden;
     background: var(--color-white);
-    animation: preloader-out var(--out) var(--ease-out) forwards;
-    animation-delay: calc(
-      var(--frames) * var(--step) + 0.15s + var(--in) + var(--hold)
-    );
+    animation: preloader-out var(--out) var(--ease-out) var(--reveal) forwards;
   }
 
   .preloader-frame {
@@ -254,8 +262,9 @@
     top: calc(var(--y) * 1%);
     left: calc(var(--x) * 1%);
     opacity: 0;
-    animation: frame-in var(--in) var(--ease-out) forwards;
-    animation-delay: calc(var(--i) * var(--step));
+    animation:
+      frame-in var(--in) var(--ease-out) calc(var(--i) * var(--step)) forwards,
+      frame-out var(--fade) var(--ease-out) var(--images-leave) forwards;
   }
 
   .preloader-frame img {
@@ -274,8 +283,9 @@
     font-size: clamp(2.25rem, 10vw, 9rem);
     line-height: 1.1;
     opacity: 0;
-    animation: frame-in var(--in) var(--ease-out) forwards;
-    animation-delay: calc(var(--frames) * var(--step) + 0.15s);
+    animation:
+      frame-in var(--name-in) var(--ease-out) var(--name-enter) forwards,
+      frame-out var(--name-out) var(--ease-out) var(--name-leave) forwards;
   }
 
   main {
@@ -513,6 +523,12 @@ html:has(.preloader) {
   }
 }
 
+@keyframes frame-out {
+  to {
+    opacity: 0;
+  }
+}
+
 @keyframes preloader-out {
   to {
     opacity: 0;
@@ -595,8 +611,7 @@ html:has(.preloader) {
 
 @media (prefers-reduced-motion: reduce) {
   .preloader {
-    animation-delay: 0.6s;
-    animation-duration: 0.3s;
+    animation: preloader-out 0.3s var(--ease-out) 0.6s forwards;
   }
 
   .preloader-frame {
