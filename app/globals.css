@@ -231,10 +231,11 @@
   }
 
   .preloader {
-    --step: 0.62s;
-    --in: 0.45s;
-    --hold: 0.8s;
-    --out: 0.6s;
+    --sequence: 5s;
+    --step: max(0.28s, calc(var(--sequence) / var(--frames)));
+    --in: min(0.2s, calc(var(--step) * 0.6));
+    --hold: 0.6s;
+    --out: 0.5s;
     position: fixed;
     inset: 0;
     z-index: 100;
@@ -252,24 +253,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    column-gap: clamp(1rem, 3vw, 2.5rem);
     width: 100vw;
     height: 100vh;
-    background: var(--color-white);
     opacity: 0;
     animation: frame-in var(--in) var(--ease-out) forwards;
     animation-delay: calc(var(--i) * var(--step));
   }
 
   .preloader-frame img {
-    height: min(58vh, 52vw);
     width: auto;
-    max-width: 42vw;
-  }
-
-  .preloader-frame img:only-child {
-    height: min(64vh, 64vw);
-    max-width: 78vw;
+    height: auto;
+    max-width: 68vw;
+    max-height: 62vh;
+    object-fit: contain;
   }
 
   .preloader-name {
