@@ -109,6 +109,7 @@
 
   .masthead-sections ul {
     display: flex;
+    flex-wrap: wrap;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -116,11 +117,11 @@
   }
 
   .masthead-sections .roman,
-  .masthead-sections li:first-child::after {
+  .masthead-sections li:not(:last-child)::after {
     font-style: italic;
   }
 
-  .masthead-sections li:first-child::after {
+  .masthead-sections li:not(:last-child)::after {
     content: ",";
   }
 
@@ -257,20 +258,32 @@
     animation: preloader-out var(--out) var(--ease-out) var(--reveal) forwards;
   }
 
-  .preloader-frame {
+  .preloader-mosaic {
     position: absolute;
-    top: calc(var(--y) * 1%);
-    left: calc(var(--x) * 1%);
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .preloader-row {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  .preloader-cell {
+    flex: var(--ratio) 1 0;
+    min-width: 0;
+    overflow: hidden;
     opacity: 0;
     animation:
       frame-in var(--in) var(--ease-out) calc(var(--i) * var(--step)) forwards,
       frame-out var(--fade) var(--ease-out) var(--images-leave) forwards;
   }
 
-  .preloader-frame img {
-    width: calc(var(--w) * 1vw);
-    height: auto;
-    max-width: none;
+  .preloader-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .preloader-name {
@@ -474,13 +487,7 @@
     color: var(--muted);
   }
 
-  .preloader-frame {
-    top: calc(var(--y) * 0.8%);
-  }
 
-  .preloader-frame img {
-    width: calc(var(--w) * 2.2vw);
-  }
 
   .gallery-row {
     flex-wrap: wrap;
@@ -614,7 +621,7 @@ html:has(.preloader) {
     animation: preloader-out 0.3s var(--ease-out) 0.6s forwards;
   }
 
-  .preloader-frame {
+  .preloader-mosaic {
     display: none;
   }
 

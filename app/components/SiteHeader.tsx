@@ -11,7 +11,7 @@ const sections = [
 
 const contact = { label: "Information & Contact", href: "/information" };
 
-export function SiteHeader() {
+export function SiteHeader({ waveUrl }: { waveUrl?: string }) {
   const pathname = usePathname();
 
   return (
@@ -38,6 +38,12 @@ export function SiteHeader() {
               />
             </li>
           ))}
+
+          {waveUrl ? (
+            <li>
+              <TextLink href={waveUrl} label="FO—WAVE" external />
+            </li>
+          ) : null}
         </ul>
       </nav>
 

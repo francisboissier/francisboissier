@@ -2,7 +2,11 @@ import type { Metadata, Viewport } from "next";
 import { Preloader } from "./components/Preloader";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
-import { getPreloaderImages, getSettings } from "./lib/content";
+import {
+  getInformation,
+  getPreloaderImages,
+  getSettings,
+} from "./lib/content";
 import { siteDescription, siteName, siteUrl } from "./lib/site";
 import "./globals.css";
 
@@ -54,6 +58,9 @@ if(d.readyState==="loading"){d.addEventListener("DOMContentLoaded",go);}else{go(
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const preloaderImages = await getPreloaderImages();
+  const information = await getInformation();
+  const wave = information?.wave?.linkUrl;
+  const waveUrl = wave ? new URL(wave).origin + new URL(wave).pathname : undefined;
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -68,7 +75,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body>
         <Preloader images={preloaderImages} />
-        <SiteHeader />
+        <SiteHeader waveUrl={waveUrl} />
         <main>{children}</main>
         <SiteFooter />
       </body>
